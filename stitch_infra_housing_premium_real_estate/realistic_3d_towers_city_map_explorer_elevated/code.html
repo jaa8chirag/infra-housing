@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="web_dashboard" name="shell-type"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&amp;family=Outfit:wght@200;300;400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style>
+    @layer base {
+      html, body { margin: 0; padding: 0; }
+      body { overscroll-behavior: none; }
+    }
+    ::-webkit-scrollbar { display: none; }
+  </style>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-container-highest": "#e3e2df",
+            "tertiary-fixed": "#97f0ff",
+            "on-surface-variant": "#44474a",
+            "surface-container-high": "#e9e8e4",
+            "on-tertiary": "#ffffff",
+            "primary-fixed": "#e0e3e8",
+            "on-background": "#1b1c1a",
+            "secondary-fixed-dim": "#e0c298",
+            "surface-container": "#efeeea",
+            "outline-variant": "#c5c6ca",
+            "on-secondary-fixed": "#281800",
+            "secondary-container": "#fedeb2",
+            "on-primary": "#ffffff",
+            "tertiary-container": "#002429",
+            "outline": "#75777b",
+            "on-error-container": "#93000a",
+            "on-primary-fixed-variant": "#43474c",
+            "secondary-fixed": "#fedeb2",
+            "surface-tint": "#5b5f63",
+            "primary-container": "#1c2024",
+            "on-tertiary-container": "#3394a1",
+            "tertiary-fixed-dim": "#7ad4e2",
+            "error": "#ba1a1a",
+            "inverse-on-surface": "#f2f1ed",
+            "primary-fixed-dim": "#c3c7cc",
+            "on-secondary-container": "#78603e",
+            "surface": "#faf9f5",
+            "on-error": "#ffffff",
+            "on-surface": "#1b1c1a",
+            "on-secondary-fixed-variant": "#584323",
+            "on-tertiary-fixed-variant": "#004f57",
+            "inverse-surface": "#30312e",
+            "tertiary": "#000a0c",
+            "surface-container-low": "#f5f4f0",
+            "primary": "#05080b",
+            "on-tertiary-fixed": "#001f24",
+            "on-primary-fixed": "#181c20",
+            "on-primary-container": "#84878c",
+            "background": "#faf9f5",
+            "surface-bright": "#faf9f5",
+            "surface-container-lowest": "#ffffff",
+            "surface-dim": "#dbdad6",
+            "inverse-primary": "#c3c7cc",
+            "secondary": "#725b38",
+            "on-secondary": "#ffffff",
+            "error-container": "#ffdad6",
+            "surface-variant": "#e3e2df"
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          spacing: {
+            "gutter-mobile": "1rem",
+            "space-xs": "0.25rem",
+            "margin": "4rem",
+            "margin-mobile": "1.25rem",
+            "space-xl": "3.5rem",
+            "space-sm": "0.5rem",
+            "space-lg": "2rem",
+            "gutter": "2rem",
+            "space-md": "1rem"
+          },
+          fontFamily: {
+            "body-sm": ["Manrope", "sans-serif"],
+            "body-md": ["Manrope", "sans-serif"],
+            "body-lg": ["Manrope", "sans-serif"],
+            "title-md": ["Manrope", "sans-serif"],
+            "title-lg": ["Manrope", "sans-serif"],
+            "headline-sm": ["Outfit", "sans-serif"],
+            "headline-md": ["Outfit", "sans-serif"],
+            "headline-lg": ["Outfit", "sans-serif"],
+            "display-hero": ["Outfit", "sans-serif"],
+            "label-technical": ["Space Grotesk", "monospace"],
+            "label-telemetry": ["Space Grotesk", "monospace"]
+          },
+          fontSize: {
+            "body-sm": ["13px", { lineHeight: "20px", letterSpacing: "0.01em", fontWeight: "400" }],
+            "body-md": ["15px", { lineHeight: "24px", letterSpacing: "0.01em", fontWeight: "400" }],
+            "body-lg": ["18px", { lineHeight: "30px", letterSpacing: "0.01em", fontWeight: "400" }],
+            "title-md": ["16px", { lineHeight: "24px", letterSpacing: "0em", fontWeight: "600" }],
+            "title-lg": ["20px", { lineHeight: "28px", letterSpacing: "-0.01em", fontWeight: "600" }],
+            "headline-sm": ["24px", { lineHeight: "32px", letterSpacing: "0em", fontWeight: "500" }],
+            "headline-md": ["32px", { lineHeight: "40px", letterSpacing: "-0.01em", fontWeight: "400" }],
+            "headline-lg": ["48px", { lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "300" }],
+            "label-technical": ["12px", { lineHeight: "16px", letterSpacing: "0.08em", fontWeight: "500" }],
+            "label-telemetry": ["10px", { lineHeight: "14px", letterSpacing: "0.12em", fontWeight: "600" }]
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-surface font-body-md text-on-surface antialiased">
+<!-- Left Side Navigation Rail -->
+<aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low border-r border-outline-variant/30 z-50 flex flex-col justify-between py-6">
+<div class="flex flex-col">
+<div class="px-6 mb-8 flex items-center gap-3">
+<img alt="Infra Housing Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1UZqYUkAUFJCqUEBYcRjzUmVoeN6bRuDQ-xEtD8xEIIDl2UDGYzvGIW_ZVcrJCNZnMlXtweb2Y-tgtS9B2u66Z5g73Zjt4od15m34DqrenXSLRaWpFFcH05zCQeyAUh5DmE7dubN3Q5TNE8NGUJpJLo1PMp6Sj3eXKT_QnD7ht8hPNcYu3IIlMPvZFwTHHFfhczPIYSzh_fQsOy_v1htFvX0HeNL4FGnYhUitDEGaYUkrM2sqo62_Jg2Ejx"/>
+<div class="flex flex-col border-l border-outline-variant/40 pl-3">
+<span class="font-headline-sm text-sm uppercase tracking-wider font-semibold text-primary">Infra Spatial</span>
+<span class="font-label-telemetry text-[9px] text-secondary uppercase tracking-[0.22em]">GIS &amp; HUD Engine</span>
+</div>
+</div>
+<div class="px-6 mb-2">
+<span class="font-label-telemetry text-[11px] uppercase tracking-widest text-outline">Architectural Navigation</span>
+</div>
+<nav class="flex flex-col px-3 gap-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" href="#">
+<span class="material-symbols-outlined text-[18px]">apartment</span>
+<span>Developments</span>
+</a>
+<a aria-current="page" class="flex items-center gap-3 px-3 py-2.5 rounded bg-surface-container-highest text-primary font-semibold shadow-xs" href="#">
+<span class="material-symbols-outlined text-[18px] text-secondary">view_in_ar</span>
+<span>3D Towers &amp; City Map</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" href="#">
+<span class="material-symbols-outlined text-[18px]">map</span>
+<span>Blueprint GIS</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" href="#">
+<span class="material-symbols-outlined text-[18px]">villa</span>
+<span>Penthouses</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" href="#">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+<span>Schedule Tour</span>
+</a>
+</nav>
+</div>
+<div class="px-6 flex flex-col gap-3">
+<div class="p-3 bg-surface-container border border-outline-variant/30 rounded flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-label-telemetry text-[10px] text-secondary uppercase font-bold tracking-wider">Spatial HUD State</span>
+<span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
+</div>
+<span class="font-body-sm text-xs font-semibold text-primary">Tower Coordinate v4.8 LOD-400</span>
+<span class="font-label-technical text-[10px] text-outline">Render Cache 8K Photometric</span>
+</div>
+<button class="w-full py-2.5 bg-secondary text-on-secondary rounded font-body-sm text-xs uppercase tracking-wider font-semibold hover:bg-on-secondary-container transition-colors shadow-sm" type="button">
+        Export Spatial Dossier
+      </button>
+</div>
+</aside>
+<!-- Main View Area -->
+<div class="pl-72">
+<!-- Top Console Header with Logo integration and Telemetry -->
+<header class="fixed top-0 left-72 right-0 h-20 bg-surface/90 backdrop-blur-xl border-b border-outline-variant/30 z-40 flex items-center justify-between px-8">
+<div class="flex items-center gap-5">
+<img alt="Infra Housing Monogram" class="h-8 w-auto object-contain bg-primary/95 px-2.5 py-1 rounded" src="https://lh3.googleusercontent.com/aida/AEtjO1UZqYUkAUFJCqUEBYcRjzUmVoeN6bRuDQ-xEtD8xEIIDl2UDGYzvGIW_ZVcrJCNZnMlXtweb2Y-tgtS9B2u66Z5g73Zjt4od15m34DqrenXSLRaWpFFcH05zCQeyAUh5DmE7dubN3Q5TNE8NGUJpJLo1PMp6Sj3eXKT_QnD7ht8hPNcYu3IIlMPvZFwTHHFfhczPIYSzh_fQsOy_v1htFvX0HeNL4FGnYhUitDEGaYUkrM2sqo62_Jg2Ejx"/>
+<div class="h-6 w-px bg-outline-variant/50"></div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-lg uppercase tracking-wider text-primary font-semibold">Estate Telemetry Console</span>
+<span class="font-label-telemetry text-[10px] text-outline tracking-wider uppercase">Metropolis Bay Flagship Tower GIS Matrix</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center bg-surface-container px-3 py-1.5 rounded border border-outline-variant/40">
+<span class="font-label-telemetry text-label-telemetry uppercase text-secondary mr-2 font-bold">FX CURRENCY</span>
+<select class="bg-transparent font-label-technical text-xs text-on-surface uppercase focus:outline-none cursor-pointer font-semibold">
+<option value="USD">USD ($)</option>
+<option value="EUR">EUR (€)</option>
+<option value="AED">AED (د.إ)</option>
+<option value="GBP">GBP (£)</option>
+</select>
+</div>
+<button class="px-4 py-2 bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-body-sm text-xs uppercase tracking-wider font-semibold rounded border border-outline-variant/40 flex items-center gap-2" type="button">
+<span class="material-symbols-outlined text-[16px] text-secondary">support_agent</span>
+<span>Concierge</span>
+</button>
+<div class="w-9 h-9 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-xs cursor-pointer">
+<span class="material-symbols-outlined text-[18px]">person</span>
+</div>
+</div>
+</header>
+<!-- Main Dynamic Content Grid -->
+<main class="relative pt-24 pb-12 bg-surface w-full px-8">
+<div class="flex flex-col w-full gap-5">
+<!-- Command Bar: Live Solar Trajectory & GIS Projection Controls -->
+<section class="flex flex-wrap items-center justify-between gap-4 py-3.5 px-5 bg-surface-container-low border border-outline-variant/30 rounded-lg shadow-xs">
+<div class="flex items-center gap-5">
+<div class="flex items-center gap-2.5">
+<span class="w-2.5 h-2.5 rounded-full bg-on-tertiary-container animate-pulse"></span>
+<span class="font-label-telemetry text-xs uppercase tracking-widest font-semibold text-primary">Spatial Engine Online</span>
+<span class="font-label-technical text-[11px] px-2 py-0.5 bg-surface-container rounded border border-outline-variant/40 text-outline">BIM LOD-400</span>
+</div>
+<div class="h-4 w-px bg-outline-variant"></div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[17px] text-secondary">explore</span>
+<span class="font-label-technical text-xs text-on-surface font-semibold tracking-wider">LAT 25.1972° N • LON 55.2744° E</span>
+</div>
+</div>
+<!-- Sunlight Simulation State Toggles -->
+<div class="flex items-center gap-1.5 bg-surface-container p-1 rounded-md border border-outline-variant/40">
+<span class="font-label-telemetry text-[11px] text-outline px-2 uppercase font-medium">Solar Trajectory</span>
+<button class="sun-preset px-3 py-1 text-on-surface-variant font-label-technical text-xs rounded hover:bg-surface-container-highest transition-all flex items-center gap-1.5" id="btn-sun-09" onclick="setSolarMode('09:00 AM', 'Morning Soft Azimuth', 38)" type="button">
+<span class="material-symbols-outlined text-[15px] text-secondary">wb_twilight</span>
+<span>09:00 AM</span>
+</button>
+<button class="sun-preset active px-3 py-1 bg-surface-container-lowest text-primary font-label-technical text-xs rounded shadow-xs font-semibold transition-all flex items-center gap-1.5 border border-outline-variant/30" id="btn-sun-12" onclick="setSolarMode('12:00 PM', 'Zenith Daylight Exposure', 82)" type="button">
+<span class="material-symbols-outlined text-[15px] text-secondary">wb_sunny</span>
+<span>12:00 PM</span>
+</button>
+<button class="sun-preset px-3 py-1 text-on-surface-variant font-label-technical text-xs rounded hover:bg-surface-container-highest transition-all flex items-center gap-1.5" id="btn-sun-17" onclick="setSolarMode('05:30 PM', 'Golden Hour Solar Dip', 19)" type="button">
+<span class="material-symbols-outlined text-[15px] text-secondary">wb_iridescent</span>
+<span>05:30 PM</span>
+</button>
+</div>
+<!-- GIS Projection Layer Selector -->
+<div class="flex items-center gap-2">
+<button class="gis-toggle active flex items-center gap-1.5 px-3 py-1.5 bg-surface-container-lowest text-primary border border-outline-variant/40 rounded text-body-sm font-semibold shadow-xs transition-all" id="layer-envelope" onclick="toggleLayer(this)" type="button">
+<span class="material-symbols-outlined text-[16px] text-on-tertiary-container">domain</span>
+<span>Massing 3D</span>
+</button>
+<button class="gis-toggle flex items-center gap-1.5 px-3 py-1.5 bg-surface-container text-on-surface-variant rounded text-body-sm font-medium hover:bg-surface-container-high transition-all" id="layer-transit" onclick="toggleLayer(this)" type="button">
+<span class="material-symbols-outlined text-[16px] text-secondary">directions_subway</span>
+<span>Transit Subgrade</span>
+</button>
+<button class="gis-toggle flex items-center gap-1.5 px-3 py-1.5 bg-surface-container text-on-surface-variant rounded text-body-sm font-medium hover:bg-surface-container-high transition-all" id="layer-marina" onclick="toggleLayer(this)" type="button">
+<span class="material-symbols-outlined text-[16px] text-on-tertiary-container">directions_boat</span>
+<span>Yacht Berths</span>
+</button>
+</div>
+</section>
+<!-- 3-Column Architectural HUD Grid -->
+<div class="grid grid-cols-12 gap-5 w-full items-start">
+<!-- LEFT COLUMN: Tower Hierarchy, Scrubber, Structural Core Telemetry -->
+<div class="col-span-12 xl:col-span-3 flex flex-col gap-4">
+<!-- Tower Selection Menu -->
+<div class="bg-surface-container-low p-5 rounded-lg border border-outline-variant/30 shadow-xs flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-telemetry text-label-telemetry uppercase text-secondary font-bold">Asset Identifier</span>
+<h3 class="font-headline-sm text-xl text-primary font-semibold tracking-tight">Active Tower Mass</h3>
+</div>
+<span class="material-symbols-outlined text-secondary text-[24px]">apartment</span>
+</div>
+<div class="flex flex-col gap-2">
+<!-- Metropolis Flagship -->
+<div class="tower-selector-card p-3 rounded-md bg-surface-container-lowest border border-secondary/40 shadow-xs cursor-pointer transition-all flex items-center justify-between" onclick="selectTower('Metropolis Central Flagship', 112, '482.4m')">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-primary text-on-primary flex items-center justify-center font-label-technical text-xs font-bold">
+                      M-01
+                    </div>
+<div class="flex flex-col">
+<span class="font-title-md text-sm text-primary font-bold">Metropolis Flagship</span>
+<span class="font-label-telemetry text-[10px] text-on-tertiary-container font-semibold uppercase">112 Floors • 482.4m</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[20px] text-secondary">check_circle</span>
+</div>
+<!-- Marina Tower -->
+<div class="tower-selector-card p-3 rounded-md bg-surface-container hover:bg-surface-container-high transition-all cursor-pointer flex items-center justify-between" onclick="selectTower('Waterfront Marina Tower', 86, '368.0m')">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-surface-container-highest text-on-surface flex items-center justify-center font-label-technical text-xs font-semibold">
+                      W-04
+                    </div>
+<div class="flex flex-col">
+<span class="font-title-md text-sm text-on-surface font-semibold">Waterfront Marina</span>
+<span class="font-label-telemetry text-[10px] text-outline uppercase">86 Floors • 368.0m</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[20px] text-outline">arrow_forward</span>
+</div>
+<!-- Skycrest Villa -->
+<div class="tower-selector-card p-3 rounded-md bg-surface-container hover:bg-surface-container-high transition-all cursor-pointer flex items-center justify-between" onclick="selectTower('Skycrest Villa Tower', 64, '289.5m')">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-surface-container-highest text-on-surface flex items-center justify-center font-label-technical text-xs font-semibold">
+                      S-09
+                    </div>
+<div class="flex flex-col">
+<span class="font-title-md text-sm text-on-surface font-semibold">Skycrest Villa</span>
+<span class="font-label-telemetry text-[10px] text-outline uppercase">64 Floors • 289.5m</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[20px] text-outline">arrow_forward</span>
+</div>
+</div>
+</div>
+<!-- Floor Level Elevation Scrubber -->
+<div class="bg-surface-container-low p-5 rounded-lg border border-outline-variant/30 shadow-xs flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<span class="font-label-telemetry text-label-telemetry uppercase text-secondary font-bold">Dynamic Floor Scrubber</span>
+<span class="font-label-technical text-xs px-2.5 py-0.5 rounded bg-surface-container-lowest border border-outline-variant/30 text-primary font-bold" id="elevation-counter">+432.0m AGL</span>
+</div>
+<div class="flex items-baseline justify-between">
+<div>
+<span class="font-headline-lg text-4xl text-primary font-light" id="floor-display">L-98</span>
+<span class="font-body-sm text-xs text-outline ml-2 font-medium" id="floor-subtext">Skydeck Penthouse Tier</span>
+</div>
+<span class="font-label-telemetry text-[10px] text-on-tertiary-container bg-surface-container-lowest border border-on-tertiary-container/30 px-2 py-1 rounded font-bold uppercase">Super-Prime</span>
+</div>
+<div class="flex flex-col gap-2">
+<input class="w-full h-2 bg-surface-container-highest rounded-lg appearance-none cursor-pointer accent-secondary" id="floor-range" max="112" min="1" oninput="updateFloor(this.value)" type="range" value="98"/>
+<div class="flex justify-between font-label-telemetry text-[9px] text-outline font-semibold">
+<span>BASE L-01</span>
+<span>PODIUM L-14</span>
+<span>SKYBRIDGE L-68</span>
+<span>APEX L-112</span>
+</div>
+</div>
+<!-- Presets -->
+<div class="grid grid-cols-3 gap-2 pt-1">
+<button class="py-1.5 px-2 bg-surface-container border border-outline-variant/40 text-on-surface font-label-technical text-[11px] rounded hover:bg-surface-container-high transition-colors font-medium" onclick="setFloorPreset(108, 'Apex Penthouse Tier', 453.6)" type="button">Penthouses</button>
+<button class="py-1.5 px-2 bg-surface-container border border-outline-variant/40 text-on-surface font-label-technical text-[11px] rounded hover:bg-surface-container-high transition-colors font-medium" onclick="setFloorPreset(68, 'Cantilever Skybridge', 285.6)" type="button">Skybridge</button>
+<button class="py-1.5 px-2 bg-surface-container border border-outline-variant/40 text-on-surface font-label-technical text-[11px] rounded hover:bg-surface-container-high transition-colors font-medium" onclick="setFloorPreset(1, 'Civic Plinth &amp; Lobby', 4.2)" type="button">Civic Plaza</button>
+</div>
+</div>
+<!-- Structural Core & Thermal Envelope Telemetry -->
+<div class="bg-surface-container-low p-5 rounded-lg border border-outline-variant/30 shadow-xs flex flex-col gap-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-on-tertiary-container">tune</span>
+<span class="font-label-telemetry text-label-telemetry uppercase tracking-wider text-primary font-bold">Thermal &amp; Structural Specs</span>
+</div>
+<div class="space-y-3 pt-2">
+<div class="flex flex-col gap-1">
+<div class="flex justify-between text-body-sm text-xs">
+<span class="text-on-surface-variant font-medium">Core Concrete Strength</span>
+<span class="font-label-technical text-xs text-primary font-bold">C90/105 Silica Fume</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="w-[94%] h-full bg-secondary"></div>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex justify-between text-body-sm text-xs">
+<span class="text-on-surface-variant font-medium">Thermal Shading (SHGC)</span>
+<span class="font-label-technical text-xs text-on-tertiary-container font-bold">0.21 Low-E Triple Glaze</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="w-[82%] h-full bg-on-tertiary-container"></div>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex justify-between text-body-sm text-xs">
+<span class="text-on-surface-variant font-medium">Acoustic dB Isolation</span>
+<span class="font-label-technical text-xs text-primary font-bold">54 dB STC Rating</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="w-[90%] h-full bg-secondary"></div>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex justify-between text-body-sm text-xs">
+<span class="text-on-surface-variant font-medium">Wind Amplitude Dampening</span>
+<span class="font-label-technical text-xs text-primary font-bold">±12mm Peak (750t TMD)</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="w-[74%] h-full bg-secondary"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- CENTER COLUMN: Photorealistic 3D Skyscraper Workspace + GIS Metropolis Satellite & Penthouse Cards -->
+<div class="col-span-12 xl:col-span-6 flex flex-col gap-4">
+<!-- MAIN 3D ARCHITECTURAL WORKBENCH VIEWPORT -->
+<div class="relative w-full aspect-[16/10] rounded-xl overflow-hidden bg-primary-container shadow-lg border border-outline-variant/40 group">
+<!-- High-res Skyscraper Exterior Render https://lh3.googleusercontent.com/aida-public/AB6AXuC2gfuyBonx5pgtAXR24MUYGUB_0uN6RCl47bX_Vyx7vZrMFuBdxVM6p7Tr2H7yWFWbd79h8f-nmPT-Gv6q5nQAKyuL6rUe65QKmBU4mRoOsFXGWCxoxAW3VGum_-SJgNo__ch7mPdBciE579RAM-A-6XuAwp2-Nt0FtQmqd3PxGsCwC6i2rCrNu73WfjQKg4JKyEBx8MgOmznBcDnFsMG77XshqGyXyrFx80WjjnZvOeg-ki8Ba3oRlA -->
+<img alt="Photorealistic architectural skyscraper exterior" class="w-full h-full object-cover select-none transition-transform duration-700 ease-out group-hover:scale-[1.02]" id="main-viewport-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2gfuyBonx5pgtAXR24MUYGUB_0uN6RCl47bX_Vyx7vZrMFuBdxVM6p7Tr2H7yWFWbd79h8f-nmPT-Gv6q5nQAKyuL6rUe65QKmBU4mRoOsFXGWCxoxAW3VGum_-SJgNo__ch7mPdBciE579RAM-A-6XuAwp2-Nt0FtQmqd3PxGsCwC6i2rCrNu73WfjQKg4JKyEBx8MgOmznBcDnFsMG77XshqGyXyrFx80WjjnZvOeg-ki8Ba3oRlA"/>
+<!-- Subtle CAD Grid Overlay -->
+<div class="absolute inset-0 pointer-events-none opacity-25 bg-[linear-gradient(to_right,#ffffff18_1px,transparent_1px),linear-gradient(to_bottom,#ffffff18_1px,transparent_1px)] bg-[size:44px_44px]"></div>
+<!-- Real-time HUD Top Bar -->
+<div class="absolute top-4 left-4 right-4 flex items-center justify-between pointer-events-none">
+<div class="pointer-events-auto bg-surface/90 backdrop-blur-md px-3.5 py-1.5 rounded-md shadow-sm border border-outline-variant/40 flex items-center gap-3">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-on-tertiary-container animate-pulse"></span>
+<span class="font-label-telemetry text-[11px] uppercase tracking-wider text-primary font-bold">CAM • 3D BIM PERSPECTIVE</span>
+</div>
+<span class="text-outline-variant font-label-telemetry">|</span>
+<span class="font-label-technical text-xs text-on-surface-variant font-medium" id="camera-fov">FOV 48mm • Solar Alt: 82° (12:00 PM)</span>
+</div>
+<div class="pointer-events-auto flex items-center gap-2">
+<div class="bg-surface/90 backdrop-blur-md px-2.5 py-1.5 rounded-md shadow-sm border border-outline-variant/40 flex items-center gap-1.5 cursor-pointer hover:bg-surface transition-colors" onclick="resetCompass()" title="Orient to True Geodetic North">
+<span class="material-symbols-outlined text-[18px] text-secondary">explore</span>
+<span class="font-label-telemetry text-xs font-bold text-primary">N 14° E</span>
+</div>
+<button class="bg-surface/90 backdrop-blur-md p-1.5 rounded-md shadow-sm border border-outline-variant/40 hover:bg-surface text-primary transition-colors" onclick="toggleCanvasExpand()" title="Toggle Viewport Focus" type="button">
+<span class="material-symbols-outlined text-[18px]">fullscreen</span>
+</button>
+</div>
+</div>
+<!-- Interactive Hotspots on Skyscraper -->
+<!-- Hotspot 1: Apex Helipad & Royal Penthouse -->
+<div class="absolute top-[21%] right-[28%] -translate-x-1/2 -translate-y-1/2 group/pin cursor-pointer" onclick="openHotspot('Royal Apex Penthouse 110', '14,200 sq ft', '6.8m Clear High Ceiling', '$28,500,000', 'Direct private helipad access, 360° infinity wraparound cantilever pool, triple-glazed acoustic curtain wall, and private express elevator.', 'https://lh3.googleusercontent.com/aida-public/AB6AXuD4GpIAuCD4zq7wl5V4wgeTkS_CXXsVnlyD-MP5B4GTJxILxUX79lTz35QOgC9rMQAkgAq00gDBrKpisMMoSWwmobj7YJ4UCSdidj6O52dCOWtko-25LPBofqnbRHSX-IH1tSpNsB9pVDqDRjzVpx5J3TkYsHypQAL7K5-gtV9UyPMzV1eFiUjv1FudIzYjdYwSogJvufg0PmWD3y2tco-yLy7p-ky4mBLMDYHtyjXA2YBCfyZClptQ8g')">
+<div class="relative flex items-center justify-center">
+<span class="absolute w-8 h-8 rounded-full bg-secondary/40 animate-ping"></span>
+<div class="w-7 h-7 rounded-full bg-secondary text-on-secondary shadow-md flex items-center justify-center font-label-technical text-xs font-bold ring-2 ring-surface">
+                    01
+                  </div>
+<div class="absolute right-9 top-1/2 -translate-y-1/2 whitespace-nowrap bg-surface/95 backdrop-blur-md px-3 py-1 rounded shadow-md border border-outline-variant/40 flex items-center gap-2 pointer-events-none transition-transform group-hover/pin:scale-105">
+<span class="w-2 h-2 rounded-full bg-on-tertiary-container"></span>
+<span class="font-label-technical text-xs text-primary font-bold">Helipad &amp; Royal Penthouse</span>
+</div>
+</div>
+</div>
+<!-- Hotspot 2: Mid-Level Cantilever Sky Gardens -->
+<div class="absolute top-[48%] left-[44%] -translate-x-1/2 -translate-y-1/2 group/pin cursor-pointer" onclick="openHotspot('Sky Garden Oasis Club L-68', '18,500 sq ft', '5.2m Net Clear', 'Exclusive Resident Realm', 'Cantilevered botanical sky deck with heated infinity hydrotherapy pools, Michelin-standard private dining salon, and wellness lounge.', 'https://lh3.googleusercontent.com/aida-public/AB6AXuC2gfuyBonx5pgtAXR24MUYGUB_0uN6RCl47bX_Vyx7vZrMFuBdxVM6p7Tr2H7yWFWbd79h8f-nmPT-Gv6q5nQAKyuL6rUe65QKmBU4mRoOsFXGWCxoxAW3VGum_-SJgNo__ch7mPdBciE579RAM-A-6XuAwp2-Nt0FtQmqd3PxGsCwC6i2rCrNu73WfjQKg4JKyEBx8MgOmznBcDnFsMG77XshqGyXyrFx80WjjnZvOeg-ki8Ba3oRlA')">
+<div class="relative flex items-center justify-center">
+<span class="absolute w-7 h-7 rounded-full bg-on-tertiary-container/40 animate-ping"></span>
+<div class="w-7 h-7 rounded-full bg-primary text-on-primary shadow-md flex items-center justify-center font-label-technical text-xs font-bold ring-2 ring-surface">
+                    02
+                  </div>
+<div class="absolute left-9 top-1/2 -translate-y-1/2 whitespace-nowrap bg-surface/95 backdrop-blur-md px-3 py-1 rounded shadow-md border border-outline-variant/40 flex items-center gap-2 pointer-events-none transition-transform group-hover/pin:scale-105">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-label-technical text-xs text-primary font-bold">Sky Oasis L-68</span>
+</div>
+</div>
+</div>
+<!-- Hotspot 3: Coastal Waterfront & Marina Bay Base -->
+<div class="absolute bottom-[22%] left-[28%] -translate-x-1/2 -translate-y-1/2 group/pin cursor-pointer" onclick="openHotspot('Civic Marina Promenade', '65,000 sq ft', 'Podium Open Air', 'Civic &amp; Private Berths', 'Private superyacht slips, travertine limestone promenade, waterfront dining verandas, and direct subterranean valet concierges.', 'https://lh3.googleusercontent.com/aida-public/AB6AXuCtp6l2bcDBSx6LN9sschRr9AvL_DJf8iW0LV6Gm7zWeFyU-aPCETmkXocT6tYR5Ll8faeWSRUbsPxV8t9fwI0zAKzNTlcwnc-gobc21l6ExxqhIiYgLyB8QRtimbu2SSyAqtCRs8qb-EHyqePKcDfW0zfIoooDBoQuYwqPw6Gk3aQMaWPAGhUOhVcv0TeAUVqNL95sxqEiYigSQWdJL-XyRm-TX_uDz1oDXCFKLTV5jxQKlvdlEaqp0g')">
+<div class="relative flex items-center justify-center">
+<div class="w-7 h-7 rounded-full bg-surface-container-lowest text-primary shadow-md flex items-center justify-center font-label-technical text-xs font-bold ring-2 ring-primary">
+                    03
+                  </div>
+<div class="absolute left-9 top-1/2 -translate-y-1/2 whitespace-nowrap bg-surface/95 backdrop-blur-md px-3 py-1 rounded shadow-md border border-outline-variant/40 flex items-center gap-2 pointer-events-none transition-transform group-hover/pin:scale-105">
+<span class="font-label-technical text-xs text-primary font-bold">Marina Promenade</span>
+</div>
+</div>
+</div>
+<!-- HUD Bottom Camera Toolbar -->
+<div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-surface/90 backdrop-blur-md px-3 py-1.5 rounded-full shadow-md border border-outline-variant/40 flex items-center gap-1.5">
+<button class="cam-btn p-1.5 rounded-full hover:bg-surface-container text-primary transition-colors font-medium" onclick="setCamTool(this, 'Orbit 360 Active')" title="3D Orbit" type="button">
+<span class="material-symbols-outlined text-[18px]">3d_rotation</span>
+</button>
+<button class="cam-btn p-1.5 rounded-full hover:bg-surface-container text-primary transition-colors font-medium" onclick="setCamTool(this, 'Pan Planar Active')" title="Planar Pan" type="button">
+<span class="material-symbols-outlined text-[18px]">pan_tool</span>
+</button>
+<button class="cam-btn p-1.5 rounded-full hover:bg-surface-container text-primary transition-colors font-medium" onclick="zoomCam(1.15)" title="Dolly Zoom In" type="button">
+<span class="material-symbols-outlined text-[18px]">zoom_in</span>
+</button>
+<button class="cam-btn p-1.5 rounded-full hover:bg-surface-container text-primary transition-colors font-medium" onclick="zoomCam(0.85)" title="Dolly Zoom Out" type="button">
+<span class="material-symbols-outlined text-[18px]">zoom_out</span>
+</button>
+<div class="h-4 w-px bg-outline-variant mx-1"></div>
+<button class="p-1.5 rounded-full hover:bg-surface-container text-secondary transition-colors" onclick="resetCameraView()" title="Reset Camera" type="button">
+<span class="material-symbols-outlined text-[18px]">restart_alt</span>
+</button>
+</div>
+<!-- Hotspot Interactive Details Card -->
+<div class="absolute bottom-5 left-5 right-5 md:right-auto md:w-96 bg-surface/95 backdrop-blur-xl p-5 rounded-lg shadow-xl border border-outline-variant/40 transition-all duration-300" id="hotspot-modal">
+<div class="flex items-start justify-between mb-2">
+<div class="flex flex-col">
+<span class="font-label-telemetry text-label-telemetry text-secondary uppercase font-bold tracking-wider">Spatial HUD Telemetry</span>
+<h4 class="font-headline-sm text-lg font-bold text-primary" id="hotspot-title">Royal Apex Penthouse 110</h4>
+</div>
+<button class="text-outline hover:text-primary transition-colors p-1" onclick="closeHotspot()" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<p class="font-body-sm text-xs text-on-surface-variant mb-3 leading-relaxed" id="hotspot-desc">
+                  Direct private helipad access, 360° infinity wraparound cantilever pool, triple-glazed acoustic curtain wall, and private express elevator.
+                </p>
+<div class="grid grid-cols-2 gap-2 mb-3 bg-surface-container/70 p-2.5 rounded border border-outline-variant/30">
+<div class="flex flex-col">
+<span class="font-label-telemetry text-[9px] text-outline uppercase font-semibold">Net Floor Area</span>
+<span class="font-label-technical text-xs font-bold text-primary" id="hotspot-area">14,200 sq ft</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-telemetry text-[9px] text-outline uppercase font-semibold">Ceiling Clear</span>
+<span class="font-label-technical text-xs font-bold text-primary" id="hotspot-height">6.8m High Clear</span>
+</div>
+<div class="flex flex-col col-span-2 pt-1 border-t border-outline-variant/40">
+<span class="font-label-telemetry text-[9px] text-outline uppercase font-semibold">Valuation Matrix</span>
+<span class="font-title-lg text-lg text-secondary font-bold" id="hotspot-price">$28,500,000 USD</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="flex-1 py-2 px-3 bg-primary text-on-primary rounded font-body-sm text-xs uppercase tracking-wider font-semibold hover:bg-surface-tint transition-colors flex items-center justify-center gap-1.5 shadow-xs" onclick="quickInquire()" type="button">
+<span class="material-symbols-outlined text-[15px]">verified</span>
+<span>Acquire Dossier</span>
+</button>
+<button class="py-2 px-3 bg-surface-container text-on-surface rounded font-body-sm text-xs hover:bg-surface-container-high border border-outline-variant/40 transition-colors flex items-center justify-center gap-1 font-semibold" onclick="openHotspotFlythrough()" title="Interactive 360 Tour" type="button">
+<span class="material-symbols-outlined text-[17px] text-secondary">360</span>
+<span>360°</span>
+</button>
+</div>
+</div>
+</div>
+<!-- SECOND ROW: 2 Rich Visual Panels (GIS Aerial Masterplan + Interior Experience) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Realistic GIS Aerial Metropolis Context https://lh3.googleusercontent.com/aida-public/AB6AXuCtp6l2bcDBSx6LN9sschRr9AvL_DJf8iW0LV6Gm7zWeFyU-aPCETmkXocT6tYR5Ll8faeWSRUbsPxV8t9fwI0zAKzNTlcwnc-gobc21l6ExxqhIiYgLyB8QRtimbu2SSyAqtCRs8qb-EHyqePKcDfW0zfIoooDBoQuYwqPw6Gk3aQMaWPAGhUOhVcv0TeAUVqNL95sxqEiYigSQWdJL-XyRm-TX_uDz1oDXCFKLTV5jxQKlvdlEaqp0g -->
+<div class="bg-surface-container-low p-4 rounded-lg border border-outline-variant/30 shadow-xs flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary">satellite_alt</span>
+<span class="font-label-telemetry text-label-telemetry uppercase text-secondary font-bold">GIS Aerial Masterplan</span>
+</div>
+<span class="font-label-technical text-[10px] bg-surface-container px-2 py-0.5 rounded text-outline font-semibold">1:2500 METRIC</span>
+</div>
+<div class="relative w-full h-44 rounded-md overflow-hidden bg-surface-container group/gis cursor-pointer">
+<img alt="Photorealistic GIS satellite masterplan" class="w-full h-full object-cover group-hover/gis:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtp6l2bcDBSx6LN9sschRr9AvL_DJf8iW0LV6Gm7zWeFyU-aPCETmkXocT6tYR5Ll8faeWSRUbsPxV8t9fwI0zAKzNTlcwnc-gobc21l6ExxqhIiYgLyB8QRtimbu2SSyAqtCRs8qb-EHyqePKcDfW0zfIoooDBoQuYwqPw6Gk3aQMaWPAGhUOhVcv0TeAUVqNL95sxqEiYigSQWdJL-XyRm-TX_uDz1oDXCFKLTV5jxQKlvdlEaqp0g"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"></div>
+<!-- GIS Reticle Coordinates -->
+<div class="absolute top-2 left-2 bg-surface/90 backdrop-blur-md px-2 py-0.5 rounded font-label-telemetry text-[10px] text-primary font-bold">
+                    HARBOR SECTOR 08 • 140 YACHT SLIPS
+                  </div>
+<div class="absolute bottom-2 left-2 right-2 flex items-center justify-between text-white text-xs font-label-technical">
+<span class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                      Direct Marine Transit Link
+                    </span>
+<span class="font-bold text-amber-300">Berth A-14 Reserved</span>
+</div>
+</div>
+<div class="flex items-center justify-between text-body-sm text-xs text-on-surface-variant font-medium">
+<span>Transit Corridor Distance:</span>
+<span class="text-on-tertiary-container font-bold">Subgrade Rail • 3 Min</span>
+</div>
+</div>
+<!-- Penthouse & Interior Unit Experience https://lh3.googleusercontent.com/aida-public/AB6AXuD4GpIAuCD4zq7wl5V4wgeTkS_CXXsVnlyD-MP5B4GTJxILxUX79lTz35QOgC9rMQAkgAq00gDBrKpisMMoSWwmobj7YJ4UCSdidj6O52dCOWtko-25LPBofqnbRHSX-IH1tSpNsB9pVDqDRjzVpx5J3TkYsHypQAL7K5-gtV9UyPMzV1eFiUjv1FudIzYjdYwSogJvufg0PmWD3y2tco-yLy7p-ky4mBLMDYHtyjXA2YBCfyZClptQ8g -->
+<div class="bg-surface-container-low p-4 rounded-lg border border-outline-variant/30 shadow-xs flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary">chair</span>
+<span class="font-label-telemetry text-label-telemetry uppercase text-secondary font-bold">Interior Residence Spec</span>
+</div>
+<span class="font-label-technical text-[10px] bg-surface-container px-2 py-0.5 rounded text-on-tertiary-container font-semibold">TURNKEY ITALIAN</span>
+</div>
+<div class="relative w-full h-44 rounded-md overflow-hidden bg-surface-container group/interior cursor-pointer" onclick="openHotspot('Duplex Penthouse 108', '11,200 sq ft', '6.2m Ceiling', '$22,400,000', 'Double-height glass salon, bronze spiral staircase, Italian travertine and custom lighting by Milanese masters.', 'https://lh3.googleusercontent.com/aida-public/AB6AXuD4GpIAuCD4zq7wl5V4wgeTkS_CXXsVnlyD-MP5B4GTJxILxUX79lTz35QOgC9rMQAkgAq00gDBrKpisMMoSWwmobj7YJ4UCSdidj6O52dCOWtko-25LPBofqnbRHSX-IH1tSpNsB9pVDqDRjzVpx5J3TkYsHypQAL7K5-gtV9UyPMzV1eFiUjv1FudIzYjdYwSogJvufg0PmWD3y2tco-yLy7p-ky4mBLMDYHtyjXA2YBCfyZClptQ8g')">
+<img alt="High-end luxury modern penthouse interior" class="w-full h-full object-cover group-hover/interior:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4GpIAuCD4zq7wl5V4wgeTkS_CXXsVnlyD-MP5B4GTJxILxUX79lTz35QOgC9rMQAkgAq00gDBrKpisMMoSWwmobj7YJ4UCSdidj6O52dCOWtko-25LPBofqnbRHSX-IH1tSpNsB9pVDqDRjzVpx5J3TkYsHypQAL7K5-gtV9UyPMzV1eFiUjv1FudIzYjdYwSogJvufg0PmWD3y2tco-yLy7p-ky4mBLMDYHtyjXA2YBCfyZClptQ8g"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"></div>
+<div class="absolute top-2 left-2 bg-surface/90 backdrop-blur-md px-2 py-0.5 rounded font-label-telemetry text-[10px] text-primary font-bold">
+                    DUPLEX SALON • GOLDEN HOUR
+                  </div>
+<div class="absolute bottom-2 left-2 right-2 flex items-center justify-between text-white text-xs font-label-technical">
+<span>Sculptural Bronze Staircase</span>
+<span class="text-amber-300 font-bold">STC 54 dB Acoustic Glass</span>
+</div>
+</div>
+<div class="flex items-center justify-between text-body-sm text-xs text-on-surface-variant font-medium">
+<span>Finishes Specification:</span>
+<span class="text-primary font-bold">Travertine &amp; Brushed Champagne Brass</span>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN: Tier Availability Matrix, BIM Export, Concierge VIP Dispatch -->
+<div class="col-span-12 xl:col-span-3 flex flex-col gap-4">
+<!-- Real-time Availability Matrix -->
+<div class="bg-surface-container-low p-5 rounded-lg border border-outline-variant/30 shadow-xs flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-telemetry text-label-telemetry uppercase text-secondary font-bold">Inventory Matrix</span>
+<h3 class="font-headline-sm text-xl text-primary font-semibold tracking-tight">Active Residencies</h3>
+</div>
+<span class="font-label-technical text-xs px-2.5 py-1 bg-surface-container-lowest border border-on-tertiary-container/40 rounded text-on-tertiary-container font-bold">14 Available</span>
+</div>
+<div class="space-y-2">
+<!-- Unit 1 -->
+<div class="p-3 bg-surface-container-lowest rounded-md flex items-center justify-between border border-outline-variant/30 hover:border-secondary/60 hover:shadow-xs transition-all cursor-pointer" onclick="openHotspot('Sky Villa 84-A', '7,850 sq ft', '4.4m Clear Ceiling', '$16,800,000', 'Four en-suite bedrooms, dual western terrace with private sunset plunge pool and wine gallery.', 'https://lh3.googleusercontent.com/aida-public/AB6AXuD4GpIAuCD4zq7wl5V4wgeTkS_CXXsVnlyD-MP5B4GTJxILxUX79lTz35QOgC9rMQAkgAq00gDBrKpisMMoSWwmobj7YJ4UCSdidj6O52dCOWtko-25LPBofqnbRHSX-IH1tSpNsB9pVDqDRjzVpx5J3TkYsHypQAL7K5-gtV9UyPMzV1eFiUjv1FudIzYjdYwSogJvufg0PmWD3y2tco-yLy7p-ky4mBLMDYHtyjXA2YBCfyZClptQ8g')">
+<div class="flex flex-col">
+<span class="font-title-md text-sm text-primary font-bold">Sky Villa 84-A</span>
+<span class="font-label-telemetry text-[10px] text-outline">4 Bed • 7,850 sq ft • West Sun</span>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-label-technical text-xs font-bold text-secondary">$16.8M</span>
+<span class="font-label-telemetry text-[9px] text-emerald-700 font-bold uppercase">Available</span>
+</div>
+</div>
+<!-- Unit 2 -->
+<div class="p-3 bg-surface-container-lowest rounded-md flex items-center justify-between border border-outline-variant/30 hover:border-secondary/60 hover:shadow-xs transition-all cursor-pointer" onclick="openHotspot('Duplex Penthouse 108', '11,200 sq ft', '6.2m Ceiling', '$22,400,000', 'Double-height glass salon, bronze spiral staircase, Italian travertine and custom lighting by Milanese masters.', 'https://lh3.googleusercontent.com/aida-public/AB6AXuD4GpIAuCD4zq7wl5V4wgeTkS_CXXsVnlyD-MP5B4GTJxILxUX79lTz35QOgC9rMQAkgAq00gDBrKpisMMoSWwmobj7YJ4UCSdidj6O52dCOWtko-25LPBofqnbRHSX-IH1tSpNsB9pVDqDRjzVpx5J3TkYsHypQAL7K5-gtV9UyPMzV1eFiUjv1FudIzYjdYwSogJvufg0PmWD3y2tco-yLy7p-ky4mBLMDYHtyjXA2YBCfyZClptQ8g')">
+<div class="flex flex-col">
+<span class="font-title-md text-sm text-primary font-bold">Duplex Penthouse 108</span>
+<span class="font-label-telemetry text-[10px] text-outline">5 Bed • 11,200 sq ft • 360° Panorama</span>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-label-technical text-xs font-bold text-secondary">$22.4M</span>
+<span class="font-label-telemetry text-[9px] text-amber-700 font-bold uppercase">Reserved Hold</span>
+</div>
+</div>
+<!-- Unit 3 -->
+<div class="p-3 bg-surface-container-lowest rounded-md flex items-center justify-between border border-outline-variant/30 hover:border-secondary/60 hover:shadow-xs transition-all cursor-pointer" onclick="openHotspot('Executive Suite 42-C', '3,150 sq ft', '3.8m Clear', '$6,200,000', 'Corner 2-bedroom executive layout overlooking the turquoise yacht harbor basin.', 'https://lh3.googleusercontent.com/aida-public/AB6AXuCtp6l2bcDBSx6LN9sschRr9AvL_DJf8iW0LV6Gm7zWeFyU-aPCETmkXocT6tYR5Ll8faeWSRUbsPxV8t9fwI0zAKzNTlcwnc-gobc21l6ExxqhIiYgLyB8QRtimbu2SSyAqtCRs8qb-EHyqePKcDfW0zfIoooDBoQuYwqPw6Gk3aQMaWPAGhUOhVcv0TeAUVqNL95sxqEiYigSQWdJL-XyRm-TX_uDz1oDXCFKLTV5jxQKlvdlEaqp0g')">
+<div class="flex flex-col">
+<span class="font-title-md text-sm text-primary font-bold">Executive Suite 42-C</span>
+<span class="font-label-telemetry text-[10px] text-outline">2 Bed • 3,150 sq ft • Marina Bay</span>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-label-technical text-xs font-bold text-secondary">$6.2M</span>
+<span class="font-label-telemetry text-[9px] text-outline font-bold uppercase">Underwriting</span>
+</div>
+</div>
+<!-- Unit 4 -->
+<div class="p-3 bg-surface-container-lowest rounded-md flex items-center justify-between border border-outline-variant/30 hover:border-secondary/60 hover:shadow-xs transition-all cursor-pointer" onclick="openHotspot('Garden Terrace Loft 18', '5,400 sq ft', '4.2m Clear', '$9,500,000', 'Direct access to the podium botanical garden water court with private reflecting pool terrace.', 'https://lh3.googleusercontent.com/aida-public/AB6AXuC2gfuyBonx5pgtAXR24MUYGUB_0uN6RCl47bX_Vyx7vZrMFuBdxVM6p7Tr2H7yWFWbd79h8f-nmPT-Gv6q5nQAKyuL6rUe65QKmBU4mRoOsFXGWCxoxAW3VGum_-SJgNo__ch7mPdBciE579RAM-A-6XuAwp2-Nt0FtQmqd3PxGsCwC6i2rCrNu73WfjQKg4JKyEBx8MgOmznBcDnFsMG77XshqGyXyrFx80WjjnZvOeg-ki8Ba3oRlA')">
+<div class="flex flex-col">
+<span class="font-title-md text-sm text-primary font-bold">Garden Terrace Loft 18</span>
+<span class="font-label-telemetry text-[10px] text-outline">3 Bed • 5,400 sq ft • Courtyard</span>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-label-technical text-xs font-bold text-secondary">$9.5M</span>
+<span class="font-label-telemetry text-[9px] text-emerald-700 font-bold uppercase">Available</span>
+</div>
+</div>
+</div>
+<button class="w-full py-2 bg-surface-container hover:bg-surface-container-high rounded border border-outline-variant/40 font-body-sm text-xs uppercase tracking-wider font-semibold text-primary transition-colors text-center" onclick="showFullMatrix()" type="button">
+                Inspect Complete 112 Levels
+              </button>
+</div>
+<!-- Architectural BIM Package Export -->
+<div class="bg-surface-container-low p-5 rounded-lg border border-outline-variant/30 shadow-xs flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<span class="font-label-telemetry text-label-telemetry uppercase text-secondary font-bold">Verified Dossier</span>
+<span class="material-symbols-outlined text-[20px] text-secondary">verified</span>
+</div>
+<h4 class="font-title-lg text-base text-primary font-bold">Architectural BIM Package</h4>
+<p class="font-body-sm text-xs text-on-surface-variant leading-relaxed">
+                Revit models, OpenBIM IFC coordinates, solar analysis charts, and acoustic attenuation envelopes for verified institutional purchasers.
+              </p>
+<div class="flex flex-col gap-2 pt-1">
+<a class="p-2.5 bg-surface-container hover:bg-surface-container-high rounded border border-outline-variant/30 flex items-center justify-between transition-colors" href="javascript:void(0)" onclick="alert('Downloading Autodesk Revit 2024 (.RVT) Structural Model...');">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary">folder_zip</span>
+<span class="font-label-technical text-xs text-primary font-bold">Revit 2024 (.RVT)</span>
+</div>
+<span class="font-label-telemetry text-[10px] text-outline">184 MB</span>
+</a>
+<a class="p-2.5 bg-surface-container hover:bg-surface-container-high rounded border border-outline-variant/30 flex items-center justify-between transition-colors" href="javascript:void(0)" onclick="alert('Downloading OpenBIM Standard (.IFC 4x3) Package...');">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-on-tertiary-container">model_training</span>
+<span class="font-label-technical text-xs text-primary font-bold">OpenBIM (.IFC 4x3)</span>
+</div>
+<span class="font-label-telemetry text-[10px] text-outline">92 MB</span>
+</a>
+</div>
+</div>
+<!-- VIP Private Helicopter & Tour Dispatch -->
+<div class="bg-surface-container-low p-5 rounded-lg border border-outline-variant/30 shadow-xs flex flex-col gap-3.5">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[22px] text-secondary">flight_takeoff</span>
+<div class="flex flex-col">
+<span class="font-label-telemetry text-[10px] uppercase text-secondary font-bold">Concierge Liaison</span>
+<h4 class="font-title-lg text-base text-primary font-bold">Helicopter &amp; Suite Tour</h4>
+</div>
+</div>
+<form class="flex flex-col gap-2.5" onsubmit="event.preventDefault(); submitTour();">
+<div class="flex flex-col gap-1">
+<label class="font-label-telemetry text-[10px] text-outline uppercase font-semibold">Select Departure Date</label>
+<input class="bg-surface-container-lowest border border-outline-variant/40 px-3 py-2 rounded text-body-sm text-xs font-semibold text-on-surface focus:outline-none" type="date" value="2025-05-18"/>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-telemetry text-[10px] text-outline uppercase font-semibold">Arrival Protocol</label>
+<select class="bg-surface-container-lowest border border-outline-variant/40 px-3 py-2 rounded text-body-sm text-xs font-semibold text-on-surface focus:outline-none">
+<option>Helipad Direct Land + Penthouse Walkthrough</option>
+<option>Private Yacht Berth Arrival + Marina Salon</option>
+<option>Chauffeured Maybach + BIM VR Lounge</option>
+</select>
+</div>
+<button class="w-full mt-1.5 py-3 bg-secondary text-on-secondary rounded font-body-sm text-xs uppercase tracking-wider font-semibold hover:bg-on-secondary-container transition-colors shadow-sm flex items-center justify-center gap-2" id="btn-tour-submit" type="submit">
+<span class="material-symbols-outlined text-[17px]">verified_user</span>
+<span>Authorize VIP Flight Tour</span>
+</button>
+</form>
+<span class="font-label-telemetry text-[10px] text-center text-outline uppercase tracking-wider">Dedicated NDA • 24/7 Diplomatic Liaison</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Interactive JavaScript Engine -->
+<script>
+    function setSolarMode(time, label, elevationDeg) {
+      document.querySelectorAll('.sun-preset').forEach(btn => {
+        btn.classList.remove('bg-surface-container-lowest', 'shadow-xs', 'text-primary', 'font-semibold', 'border', 'border-outline-variant/30');
+        btn.classList.add('text-on-surface-variant');
+      });
+      event.currentTarget.classList.add('bg-surface-container-lowest', 'shadow-xs', 'text-primary', 'font-semibold', 'border', 'border-outline-variant/30');
+      event.currentTarget.classList.remove('text-on-surface-variant');
+      
+      const camFov = document.getElementById('camera-fov');
+      if (camFov) {
+        camFov.innerText = 'FOV 48mm • Solar Alt: ' + elevationDeg + '° (' + time + ')';
+      }
+    }
+
+    function toggleLayer(element) {
+      if (element.classList.contains('bg-surface-container-lowest')) {
+        element.classList.remove('bg-surface-container-lowest', 'shadow-xs', 'text-primary', 'border', 'border-outline-variant/40');
+        element.classList.add('bg-surface-container', 'text-on-surface-variant');
+      } else {
+        element.classList.remove('bg-surface-container', 'text-on-surface-variant');
+        element.classList.add('bg-surface-container-lowest', 'shadow-xs', 'text-primary', 'border', 'border-outline-variant/40');
+      }
+    }
+
+    function updateFloor(val) {
+      const floorDisplay = document.getElementById('floor-display');
+      const elevDisplay = document.getElementById('elevation-counter');
+      const subtext = document.getElementById('floor-subtext');
+      if (floorDisplay) {
+        floorDisplay.innerText = 'L-' + (val < 10 ? '0' + val : val);
+      }
+      if (elevDisplay) {
+        const meters = (val * 4.2).toFixed(1);
+        elevDisplay.innerText = '+' + meters + 'm AGL';
+      }
+      if (subtext) {
+        if (val > 100) subtext.innerText = 'Crown Apex Penthouse Tier';
+        else if (val > 65) subtext.innerText = 'Skybridge & Terrace Tier';
+        else if (val > 25) subtext.innerText = 'Super-Prime Residential';
+        else subtext.innerText = 'Podium Plaza Suites';
+      }
+    }
+
+    function setFloorPreset(level, label, heightMeters) {
+      const range = document.getElementById('floor-range');
+      if (range) {
+        range.value = level;
+        updateFloor(level);
+      }
+    }
+
+    function selectTower(name, floors, height) {
+      const cards = document.querySelectorAll('.tower-selector-card');
+      cards.forEach(c => {
+        c.classList.remove('bg-surface-container-lowest', 'border-secondary/40', 'shadow-xs');
+        c.classList.add('bg-surface-container');
+      });
+      event.currentTarget.classList.remove('bg-surface-container');
+      event.currentTarget.classList.add('bg-surface-container-lowest', 'border-secondary/40', 'shadow-xs');
+
+      const range = document.getElementById('floor-range');
+      if (range) {
+        range.max = floors;
+        range.value = Math.floor(floors * 0.88);
+        updateFloor(range.value);
+      }
+    }
+
+    function openHotspot(title, area, height, price, desc, previewImg) {
+      const modal = document.getElementById('hotspot-modal');
+      document.getElementById('hotspot-title').innerText = title;
+      document.getElementById('hotspot-area').innerText = area;
+      document.getElementById('hotspot-height').innerText = height;
+      document.getElementById('hotspot-price').innerText = price;
+      document.getElementById('hotspot-desc').innerText = desc;
+      modal.classList.remove('hidden');
+    }
+
+    function closeHotspot() {
+      document.getElementById('hotspot-modal').classList.add('hidden');
+    }
+
+    function quickInquire() {
+      const title = document.getElementById('hotspot-title').innerText;
+      alert('Secure Architectural Acquisition Protocol initiated for ' + title + '. An Infra Housing executive will connect within 15 minutes.');
+    }
+
+    function openHotspotFlythrough() {
+      alert('Activating 360° Photorealistic VR Tour in 8K resolution...');
+    }
+
+    function setCamTool(btn, modeName) {
+      document.querySelectorAll('.cam-btn').forEach(b => b.classList.remove('bg-surface-container', 'text-secondary'));
+      btn.classList.add('bg-surface-container', 'text-secondary');
+      const fovEl = document.getElementById('camera-fov');
+      if (fovEl) fovEl.innerText = modeName + ' • Realtime';
+    }
+
+    function zoomCam(factor) {
+      const fovEl = document.getElementById('camera-fov');
+      if (fovEl) fovEl.innerText = 'Zoom: ' + (factor > 1 ? '+15%' : '-15%') + ' • 50mm Prime Lens';
+    }
+
+    function resetCameraView() {
+      const fovEl = document.getElementById('camera-fov');
+      if (fovEl) fovEl.innerText = 'FOV 48mm • Solar Alt: 82° (12:00 PM)';
+    }
+
+    function resetCompass() {
+      alert('Viewport re-indexed to Geodetic True North (000° 00\' 00" N).');
+    }
+
+    function showFullMatrix() {
+      alert('Full 112-Level Matrix loaded: structural MEP cores, tuned dampers, and high-speed express elevators displayed.');
+    }
+
+    function toggleCanvasExpand() {
+      alert('Toggling Fullscreen 3D BIM Immersive HUD mode.');
+    }
+
+    function submitTour() {
+      const btn = document.getElementById('btn-tour-submit');
+      btn.innerHTML = '<span class="material-symbols-outlined text-[18px] animate-spin">refresh</span><span>Transmitting Protocol...</span>';
+      setTimeout(() => {
+        btn.innerHTML = '<span class="material-symbols-outlined text-[18px]">verified</span><span>Flight Itinerary Reserved</span>';
+      }, 800);
+    }
+  </script>
+</body></html>
